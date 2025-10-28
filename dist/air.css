@@ -1,0 +1,48 @@
+.water {
+  position: relative;
+  top: -18px;
+  width: 60px;
+  height: 95px;
+  background-color: #87db6b;
+  clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(101, 189, 29, 0.1);
+  border: 1px solid #087e2d;
+  box-shadow: 0 0 0 3px #47a83d,
+  inset 0 0 30px #087e2d;
+}
+
+.water::before {
+  content: "";
+  position: absolute;
+  top: -150%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background-color: #ececec;
+  border-radius: 40%;
+  animation: anim 12s linear infinite;
+}
+
+.water::after {
+  content: "";
+  position: absolute;
+  top: -150%;
+  left: -52%;
+  width: 204%;
+  height: 204%;
+  border-radius: 40%;
+  background-color: #ececec80;
+  animation: anim 12s linear infinite;
+  animation-delay: 0.5s;
+}
+
+@keyframes anim {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
