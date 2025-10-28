@@ -1,5 +1,5 @@
 export default {
-  content: ["./dist/**/*.{html,js}"], // arahkan ke dalam dist
+  content: ["./src/**/*.{html,js}", "./dist/**/*.{html,js}"], // src & dist sekalian
   theme: {
     extend: {
       colors: {
