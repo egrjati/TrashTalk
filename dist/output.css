@@ -555,9 +555,9 @@ video {
 }
 
 @font-face {
-  font-family: 'DigitalNumbers';
+  font-family: "DigitalNumbers";
 
-  src: url('../assets/font/DigitalNumbers-Regular.ttf') format('truetype');
+  src: url("assets/font/DigitalNumbers-Regular.ttf") format("truetype");
 
   font-weight: normal;
 
