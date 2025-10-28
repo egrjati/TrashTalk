@@ -1,5 +1,5 @@
 export default {
-  content: ["./src/**/*.{html,js}", "./dist/**/*.{html,js}"], // src & dist sekalian
+  content: ["./src/**/*.{html,js}", "./dist/**/*.{html,js}", "./*.{html,js}"],
   theme: {
     extend: {
       colors: {
