@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const dropdownButton = document.getElementById("dropdownButton");
   const calendarOverlay = document.getElementById("calendarOverlay");
-  const calendar = document.getElementById("calendar");
   const monthYear = document.getElementById("monthYear");
   const datesContainer = document.getElementById("dates");
   const prevMonth = document.getElementById("prevMonth");
@@ -28,12 +27,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const oneWeekAgo = new Date(today);
     oneWeekAgo.setDate(today.getDate() - 6); // 7 hari terakhir
 
-    // Kosong di awal bulan (biar rapi)
+    // Kosong di awal bulan biar grid rapi
     for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
       const empty = document.createElement("div");
       datesContainer.appendChild(empty);
     }
 
+    // Loop setiap tanggal dalam bulan
     for (let i = 1; i <= lastDate; i++) {
       const thisDate = new Date(year, month, i);
       thisDate.setHours(0, 0, 0, 0);
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "duration-200"
       );
 
-      // Jika tanggal masih dalam 7 hari terakhir
+      // Jika tanggal masih dalam 7 hari terakhir (termasuk hari ini)
       if (thisDate >= oneWeekAgo && thisDate <= today) {
         dateElem.classList.add(
           "bg-black",
@@ -71,12 +71,23 @@ document.addEventListener("DOMContentLoaded", () => {
           );
         }
 
+        // Event klik hanya untuk tanggal dalam 7 hari terakhir
         dateElem.addEventListener("click", () => {
           alert("Tanggal dipilih: " + thisDate.toLocaleDateString("id-ID"));
           calendarOverlay.classList.add("hidden");
         });
-      } else {
-        // Tanggal lain: putih dan tidak bisa diklik
+      }
+      // Jika tanggal sudah lampau lebih dari 7 hari lalu
+      else if (thisDate < oneWeekAgo) {
+        dateElem.classList.add(
+          "bg-transparent",
+          "text-gray-300",
+          "cursor-not-allowed",
+          "opacity-60"
+        );
+      }
+      // Jika tanggal di masa depan (setelah hari ini)
+      else {
         dateElem.classList.add(
           "bg-white",
           "text-gray-300",
