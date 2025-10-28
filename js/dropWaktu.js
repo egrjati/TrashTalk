@@ -24,10 +24,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const oneWeekAgo = new Date(today);
-    oneWeekAgo.setDate(today.getDate() - 7);
 
-    // Kosong di awal bulan (supaya rapi)
+    const oneWeekAgo = new Date(today);
+    oneWeekAgo.setDate(today.getDate() - 6); // 7 hari terakhir
+
+    // Kosong di awal bulan (biar rapi)
     for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
       const empty = document.createElement("div");
       datesContainer.appendChild(empty);
@@ -40,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const dateElem = document.createElement("div");
       dateElem.textContent = i;
       dateElem.classList.add(
-        "cursor-pointer",
         "rounded-md",
         "py-1",
         "text-sm",
@@ -51,32 +51,51 @@ document.addEventListener("DOMContentLoaded", () => {
         "duration-200"
       );
 
-      // Pewarnaan tanggal
+      // Jika tanggal masih dalam 7 hari terakhir
       if (thisDate >= oneWeekAgo && thisDate <= today) {
         dateElem.classList.add(
           "bg-black",
           "text-white",
           "font-semibold",
+          "cursor-pointer",
           "hover:bg-gray-800"
         );
-      } else {
-        dateElem.classList.add("text-gray-300");
-      }
 
-      dateElem.addEventListener("click", () => {
-        alert("Tanggal dipilih: " + thisDate.toLocaleDateString("id-ID"));
-        calendarOverlay.classList.add("hidden");
-      });
+        // Efek khusus untuk tanggal hari ini
+        if (thisDate.getTime() === today.getTime()) {
+          dateElem.classList.add(
+            "ring-2",
+            "ring-green-400",
+            "shadow-[0_0_10px_rgba(0,255,150,0.4)]",
+            "scale-105"
+          );
+        }
+
+        dateElem.addEventListener("click", () => {
+          alert("Tanggal dipilih: " + thisDate.toLocaleDateString("id-ID"));
+          calendarOverlay.classList.add("hidden");
+        });
+      } else {
+        // Tanggal lain: putih dan tidak bisa diklik
+        dateElem.classList.add(
+          "bg-white",
+          "text-gray-300",
+          "cursor-not-allowed",
+          "opacity-60"
+        );
+      }
 
       datesContainer.appendChild(dateElem);
     }
   }
 
+  // Tombol dropdown
   dropdownButton.addEventListener("click", () => {
     calendarOverlay.classList.toggle("hidden");
     renderCalendar(currentDate);
   });
 
+  // Navigasi bulan
   prevMonth.addEventListener("click", () => {
     currentDate.setMonth(currentDate.getMonth() - 1);
     renderCalendar(currentDate);
